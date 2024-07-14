@@ -7,7 +7,24 @@ def employee():
         print(s)
         entry = input("Enter 1, 2 or 3 according to the above options: ")
         if entry == "1":
-            pass
+            d = Drivers()
+            st = '''Enter:
+            1. To view all the drivers.
+            2. To add a driver.
+            3. To delete a driver.
+            4. To go back to main menu'''
+            while True:
+                print(st)
+                ans = input("Enter 1, 2 or 3 according to the above options: ")
+                if ans == "1":
+                    d.print_drivers()
+                elif ans == "2":
+                    d.add_driver()
+                elif ans == "3":
+                    d.delete_driver()
+                elif ans == "4":
+                    break
+        
         elif entry == "2":
             pass
         elif entry == "3":
@@ -133,8 +150,8 @@ class Drivers:
         2. If you want to see the drivers with their information.
         3. If you want to see the information of a specific driver.
         4. If you want to go back to main menu.'''
-        print(s)
         while True:
+            print(s)
             entry = input("Enter a number from the above options according to what you want: ")
             if entry == "1":
                 for key in self.driver:
