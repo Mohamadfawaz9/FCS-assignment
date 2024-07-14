@@ -1,35 +1,3 @@
-def employee():
-    while True:
-        s = '''Hello! Please enter:
-        1. To go to the drivers' menu.
-        2. To go to the cities' menu.
-        3. To exit the system.'''
-        print(s)
-        entry = input("Enter 1, 2 or 3 according to the above options: ")
-        if entry == "1":
-            d = Drivers()
-            st = '''Enter:
-            1. To view all the drivers.
-            2. To add a driver.
-            3. To delete a driver.
-            4. To go back to main menu'''
-            while True:
-                print(st)
-                ans = input("Enter 1, 2 or 3 according to the above options: ")
-                if ans == "1":
-                    d.print_drivers()
-                elif ans == "2":
-                    d.add_driver()
-                elif ans == "3":
-                    d.delete_driver()
-                elif ans == "4":
-                    break
-        
-        elif entry == "2":
-            pass
-        elif entry == "3":
-            return
-
 # Add the cities to the graph
 class Cities:
     def __init__(self):
@@ -38,7 +6,7 @@ class Cities:
     def add_city(self):
         s = '''Please enter:
         1. If you want to add a city with a driver.
-        2. If you want to add a neighbouring city with a delivery guy.
+        2. If you want to add a neighbouring city.
         3. If you don't want to add cities or want to go back to main menu'''
         print(s)
         while True:
@@ -61,6 +29,7 @@ class Cities:
                 return
 
     def delete_city(self):
+        d = Drivers()
         s = '''Please enter:
         1. To delete a city.
         2. To go back to main menu'''
@@ -70,17 +39,24 @@ class Cities:
             if ans == "1":
                 city = input("Enter the name of the city to remove: ")
                 if city in self.graph:
-                    del(self.graph[city])
+                    if self.graph[city][0] in d.driver:
+                        a = self.graph[city][0]
+                        del d.driver[a]
+                        del self.graph[city]
+                    else:
+                        del self.graph[city]
                 else:
-                    print("This entry is not correct. Please try again or enter '2' if you want to go back to main menu")
+                    print("This entry is not correct. Please enter '1' and try again or enter '2' if you want to go back to main menu")
             elif ans == "2":
                 return
 
     def print_cities(self):
+        d = Drivers
         s = '''Hello! Please enter:
         1. If you just want to see the registered cities in the system.
         2. If you want to see the connections between the cities.
-        3. If you want to go back to main menu.'''
+        3. If you want to see the neighbouring cities of a city.
+        4. If you want to go back to main menu.'''
         print(s)
         while True:
             entry = input("Enter a number from the above options according to what you want: ")
@@ -92,7 +68,16 @@ class Cities:
                 print(self.graph)    # this one prints all the keys with their values (the cities and the ones it has connections with)
                 return
             elif entry == "3":
+                city = input("Enter the name of the city: ")
+                if city in self.graph:
+                    if self.graph[city][0] in d.driver:
+                        print(f"{city}: {self.graph[city][1:len(self.graph[city])]}")
+                    else:
+                        print(f"{city}: {self.graph[city]}")
+            elif entry == "4":
                 return
+    def print_drivers_delivering(self):
+        pass
 
 class Drivers:
     def __init__(self):
@@ -168,3 +153,52 @@ class Drivers:
                     print("This driver does not exist. Please enter '3' to try again or enter '4' if you want to go back to main menu")
             elif entry == "4":
                 return
+
+def employee():
+    while True:
+        s = '''Hello! Please enter:
+        1. To go to the drivers' menu.
+        2. To go to the cities' menu.
+        3. To exit the system.'''
+        print(s)
+        entry = input("Enter 1, 2 or 3 according to the above options: ")
+        if entry == "1":
+            d = Drivers()
+            st = '''Enter:
+            1. To view all the drivers.
+            2. To add a driver.
+            3. To delete a driver.
+            4. To go back to main menu'''
+            while True:
+                print(st)
+                ans = input("Enter 1, 2 or 3 according to the above options: ")
+                if ans == "1":
+                    d.print_drivers()
+                elif ans == "2":
+                    d.add_driver()
+                elif ans == "3":
+                    d.delete_driver()
+                elif ans == "4":
+                    break
+        elif entry == "2":
+            c = Cities()
+            ci = '''Please Enter:
+            1. Show cities
+            2. Print neighboring cities
+            3. Print Drivers delivering to city
+            4. Go back to main menu'''
+            while True:
+                print(ci)
+                answ = input("Enter a number from the above options according to what you want: ")
+                if answ == "1":
+                    c.print_cities()
+                elif answ == "2":
+                    c.print_cities()
+                elif answ == "3":
+                    c.print_drivers_delivering()
+                elif answ == "4":
+                    break
+        elif entry == "3":
+            return
+
+employee()
