@@ -53,13 +53,15 @@ class Cities:
 
     def print_cities(self):
         d = Drivers
+        c = Cities
         s = '''Hello! Please enter:
         1. If you just want to see the registered cities in the system.
         2. If you want to see the connections between the cities.
         3. If you want to see the neighbouring cities of a city.
-        4. If you want to go back to main menu.'''
-        print(s)
+        4. If you want to see a certain city with its driver.
+        5. If you want to go back to main menu.'''
         while True:
+            print(s)
             entry = input("Enter a number from the above options according to what you want: ")
             if entry == "1":
                 for key in self.graph:
@@ -76,6 +78,25 @@ class Cities:
                     else:
                         print(f"{city}: {self.graph[city]}")
             elif entry == "4":
+                while True:
+                    city = input("Enter the name of a city: ")
+                    if c.graph[city][0] in d.driver:
+                        print(f"{city}:{c.graph[city][0]}")
+                        break
+                    else:
+                        k = '''This city not have a driver. Do you want to add one?
+                        Please enter:
+                        1. If you want to add a driver
+                        2. If you want to go back to the menu'''
+                        print(k)
+                        ans = input("Enter 1 or 2 according to the above options: ")
+                        if ans == "1":
+                            d.add_driver()
+                            print(f"{city}:{c.graph[city][0]}")
+                            break
+                        elif ans == "2":
+                            break
+            elif entry == "5":
                 return
     def print_drivers_delivering(self):
         c = Cities()
