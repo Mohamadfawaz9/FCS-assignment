@@ -12,14 +12,14 @@ class Cities:
         while True:
             answer = input("Enter 1, 2 or 3 according to the above options: ")
             if answer == "1":
-                n_city = input("Enter the city name: ")   # n_city as "new city"
+                n_city = input("Enter the city name: ").upper()   # n_city as "new city"
                 if n_city not in self.graph:
                     self.graph[n_city] = []
                 else:
                     print(s)
             elif answer == "2":
-                city = input("Enter the name of the main city: ")
-                nhb_city = input("Enter the neighbouring city: ")  # nhb_city as "neighbouring city"
+                city = input("Enter the name of the main city: ").upper()
+                nhb_city = input("Enter the neighbouring city: ").upper()  # nhb_city as "neighbouring city"
                 if nhb_city not in self.graph:
                     self.graph[nhb_city] = []
                     self.graph[nhb_city].append(city)
@@ -38,7 +38,7 @@ class Cities:
         ans = input("Enter 1 or 2 according to the above options: ")
         while True:
             if ans == "1":
-                city = input("Enter the name of the city to remove: ")
+                city = input("Enter the name of the city to remove: ").upper()
                 if city in self.graph:
                     if self.graph[city][0] in d.driver:
                         a = self.graph[city][0]
@@ -69,7 +69,7 @@ class Cities:
                 print(self.graph)    # this one prints all the keys with their values (the cities and the ones it has connections with)
                 return
             elif entry == "3":
-                city = input("Enter the name of the city: ")
+                city = input("Enter the name of the city: ").upper()
                 if city in self.graph:
                     if self.graph[city][0] in d.driver:
                         print(f"{city}: {self.graph[city][1:len(self.graph[city])]}")
@@ -84,7 +84,7 @@ class Cities:
         drivers_delivering = []
         print("To print all the delivery drivers that could reach a certain city, please enter the name of the city")
         # I am going to use breadth first search (BFS) algorithm to find all the drivers that could reach the city of the users choice
-        city = input("Enter the name of the city here: ")
+        city = input("Enter the name of the city here: ").upper()
         while city != 'stop':
             if city in c.graph:
                 q.enqueue(city)
@@ -104,7 +104,7 @@ class Cities:
                     return 
             else:
                 print("This city does not exist. Please enter a valid city or enter 'stop' to exit. ")
-                city = input("Enter the name of the city here: ")
+                city = input("Enter the name of the city here: ").upper()
 
 
 class Drivers:
@@ -122,10 +122,10 @@ class Drivers:
             ans = input("Enter 1 or 2 according to the above options:")
             if ans == "1":
                 print("To add a driver, you have to pick the city from where he is starting.")
-                city = input("Enter the starting city: ")
+                city = input("Enter the starting city: ").upper()
                 if city not in c.graph:
                     print("The city does not exist. Do you want to add this city?")
-                    answer = input("Answer with yes or no: ")
+                    answer = input("Answer with yes or no: ").lower()
                     if answer == "yes":
                         c.add_city()
                     elif answer == "no":
@@ -133,7 +133,7 @@ class Drivers:
                 else:
                     self.size += 1
                     ID = 2024000 + self.size
-                    driver_name = input("Enter driver's name: ")
+                    driver_name = input("Enter driver's name: ").upper()
                     self.driver[driver_name] = [city,ID]
                     c.graph[city].insert(0,driver_name)
             elif ans == "2":
@@ -147,7 +147,7 @@ class Drivers:
         ans = input("Enter 1 or 2 according to the above options: ")
         while True:
             if ans == "1":
-                driver = input("Enter the name of the driver to remove: ")
+                driver = input("Enter the name of the driver to remove: ").upper()
                 if driver in self.driver:
                     a = self.driver[driver][0]
                     del(self.driver[driver])
