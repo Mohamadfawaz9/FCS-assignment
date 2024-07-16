@@ -5,7 +5,7 @@ class Cities:
 
     def add_city(self):
         s = '''Please enter:
-        1. If you want to add a city with a driver.
+        1. If you want to add a city.
         2. If you want to add a neighbouring city.
         3. If you don't want to add cities or want to go back to main menu'''
         print(s)
@@ -22,7 +22,8 @@ class Cities:
                 nhb_city = input("Enter the neighbouring city: ")  # nhb_city as "neighbouring city"
                 if nhb_city not in self.graph:
                     self.graph[nhb_city] = []
-                    self.graph[nhb_city].append([city])
+                    self.graph[nhb_city].append(city)
+                    self.graph[city].append(nhb_city)
                 else:
                     self.graph[city].append(nhb_city)
             elif answer == "3":
@@ -77,7 +78,34 @@ class Cities:
             elif entry == "4":
                 return
     def print_drivers_delivering(self):
-        pass
+        c = Cities()
+        d = Drivers()
+        q = Queue()
+        drivers_delivering = []
+        print("To print all the delivery drivers that could reach a certain city, please enter the name of the city")
+        # I am going to use breadth first search (BFS) algorithm to find all the drivers that could reach the city of the users choice
+        city = input("Enter the name of the city here: ")
+        while city != 'stop':
+            if city in c.graph:
+                q.enqueue(city)
+                for i in c.graph[city]:
+                    if i not in d.driver and i not in q.queue:
+                        q.enqueue(i)
+                for i in q.queue[1:]:
+                    for j in c.graph[i]:
+                        if j not in d.driver and j not in q.queue:
+                            q.enqueue(j)
+                for z in q.queue:
+                    if c.graph[z][0] in d.driver:
+                        drivers_delivering.append(c.graph[z][0])
+                        q.dequeue()
+                if len(q.queue) == 0:
+                    print(f"The drivers who deliver to {city} are: {drivers_delivering}")
+                    return 
+            else:
+                print("This city does not exist. Please enter a valid city or enter 'stop' to exit. ")
+                city = input("Enter the name of the city here: ")
+
 
 class Drivers:
     def __init__(self):
@@ -183,10 +211,12 @@ def employee():
         elif entry == "2":
             c = Cities()
             ci = '''Please Enter:
-            1. Show cities
-            2. Print neighboring cities
-            3. Print Drivers delivering to city
-            4. Go back to main menu'''
+            1. Show cities.
+            2. Print neighboring cities.
+            3. Print Drivers delivering to city.
+            4. Add a city.
+            5. Delete a city.
+            6. Go back to main menu'''
             while True:
                 print(ci)
                 answ = input("Enter a number from the above options according to what you want: ")
@@ -197,8 +227,21 @@ def employee():
                 elif answ == "3":
                     c.print_drivers_delivering()
                 elif answ == "4":
+                    c.add_city()
+                elif answ == "5":
+                    c.delete_city()
+                elif answ == "6":
                     break
         elif entry == "3":
             return
+class Queue:
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self,item):
+        self.queue.append(item)
+
+    def dequeue(self):
+        self.queue.pop(0)
 
 employee()
