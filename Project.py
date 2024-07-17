@@ -46,6 +46,10 @@ class Cities:
                     
             elif answer == "3":
                 return
+            else:
+                    print()
+                    print("Invalid entry. Please try again.")
+                    print()
 
     def delete_city(self,d):
         
@@ -70,6 +74,10 @@ class Cities:
                     print("This entry is not correct. Please enter '1' and try again or enter '2' if you want to go back to main menu")
             elif ans == "2":
                 return
+            else:
+                    print()
+                    print("Invalid entry. Please try again.")
+                    print()
 
     def print_cities(self,d):
         s = '''Hello! Please enter:
@@ -120,6 +128,10 @@ class Cities:
                             break
             elif entry == "5":
                 return
+            else:
+                    print()
+                    print("Invalid entry. Please try again.")
+                    print()
     def print_drivers_delivering(self,d,q):
         drivers_delivering = []
         print()
@@ -183,6 +195,10 @@ class Drivers:
                     c.graph[city].insert(0,driver_name)
             elif ans == "2":
                 return
+            else:
+                    print()
+                    print("Invalid entry. Please try again.")
+                    print()
 
     def delete_driver(self,c):
         s = '''Please enter:
@@ -203,6 +219,10 @@ class Drivers:
                     print("This entry is not correct. Please try again or enter '2' if you want to go back to main menu")
             elif ans == "2":
                 return
+            else:
+                    print()
+                    print("Invalid entry. Please try again.")
+                    print()
 
     def print_drivers(self):
         s = '''Hello! Please enter:
@@ -215,21 +235,33 @@ class Drivers:
             print(s)
             print()
             entry = input("Enter a number from the above options according to what you want: ")
+            print()
             if entry == "1":
                 for key in self.driver.keys():
                     print(key, end = " - ")  #this one only prints the keys (the registered drivers)
-                return
+                    print()
+                    print()
             elif entry == "2":
-                print(driver for driver in self.driver.items())    # this one prints all the keys with their values (the drivers and their information)
-                return
+                print()
+                for key,value in self.driver.items():
+                    print(f"{key}: {value}")    # this one prints all the keys with their values (the drivers and their information)
+                print()
             elif entry == "3":
                 driver = input("Enter the full name of the driver you want to search for")
                 if driver in self.driver.keys():
+                    print()
                     print(f"{driver}: {self.driver[driver]}")
+                    print()
                 else:
+                    print()
                     print("This driver does not exist. Please enter '3' to try again or enter '4' if you want to go back to main menu")
+                    print()
             elif entry == "4":
                 return
+            else:
+                    print()
+                    print("Invalid entry. Please try again.")
+                    print()
 
 def employee():
     c = Cities()
@@ -251,7 +283,9 @@ def employee():
             3. To delete a driver.
             4. To go back to main menu'''
             while True:
+                print()
                 print(st)
+                print()
                 ans = input("Enter 1, 2 or 3 according to the above options: ")
                 if ans == "1":
                     d.print_drivers()
@@ -261,6 +295,10 @@ def employee():
                     d.delete_driver(c)
                 elif ans == "4":
                     break
+                else:
+                    print()
+                    print("Invalid entry. Please try again.")
+                    print()
         elif entry == "2":
             ci = '''Please Enter:
             1. Show cities.
@@ -286,6 +324,10 @@ def employee():
                     c.delete_city(d)
                 elif answ == "6":
                     break
+                else:
+                    print()
+                    print("Invalid entry. Please try again.")
+                    print()
         elif entry == "3":
             return
 class Queue:
