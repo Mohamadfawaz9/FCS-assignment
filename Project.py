@@ -16,7 +16,9 @@ class Cities:
             if answer == "1":
                 n_city = None
                 while n_city != "STOP":
+                    print()
                     n_city = input("Enter the city name or 'stop' to exit: ").upper()   # n_city as "new city"
+                    print()
                     if n_city not in self.graph.keys() and n_city != "STOP":
                         self.graph[n_city] = []
                     elif n_city in self.graph.keys() and n_city != "STOP":
@@ -25,7 +27,9 @@ class Cities:
                 city = input("Enter the name of the main city: ").upper()
                 nhb_city = None
                 while nhb_city != "STOP":
+                    print()
                     nhb_city = input("Enter the neighbouring city or 'stop' to exit: ").upper()  # nhb_city as "neighbouring city"
+                    print()
                     if city in self.graph.keys() and nhb_city != "STOP":
                         if nhb_city not in self.graph.keys():
                             self.graph[nhb_city] = []
@@ -68,8 +72,14 @@ class Cities:
                         a = self.graph[city][0]
                         del d.driver[a]
                         del self.graph[city]
+                        for value in self.graph.values():
+                            while city in value:
+                                value.remove(city)
                     else:
                         del self.graph[city]
+                        for value in self.graph.values():
+                            while city in value:
+                                value.remove(city)
                 else:
                     print("This entry is not correct. Please enter '1' and try again or enter '2' if you want to go back to main menu")
             elif ans == "2":
@@ -94,10 +104,10 @@ class Cities:
             if entry == "1":
                 for key in self.graph.keys():
                     print(key, end = " - ")  #this one only prints the keys (the registered cities)
-                return
+                print()
             elif entry == "2":
                 print(self.graph)    # this one prints all the keys with their values (the cities and the ones it has connections with)
-                return
+                print()
             elif entry == "3":
                 city = input("Enter the name of the city: ").upper()
                 if city in self.graph.keys():
@@ -133,30 +143,30 @@ class Cities:
                     print("Invalid entry. Please try again.")
                     print()
     def print_drivers_delivering(self,d,q):
-        drivers_delivering = []
         print()
         print("To print all the delivery drivers that could reach a certain city, please enter the name of the city")
         print()
         # I am going to use breadth first search (BFS) algorithm to find all the drivers that could reach the city of the users choice
         city = input("Enter the name of the city here: ").upper()
-        while city != 'STOP':
-            print(1)
+        drivers_delivering = []
+        while city != "STOP":
             if city in self.graph.keys():
                 q.enqueue(city)
                 for i in self.graph[city]:
                     if i not in d.driver.keys() and i not in q.queue:
                         q.enqueue(i)
-                for i in q.queue[1:]:
+                for i in q.queue:
                     for j in self.graph[i]:
                         if j not in d.driver.keys() and j not in q.queue:
                             q.enqueue(j)
                 for z in q.queue:
                     if self.graph[z][0] in d.driver.keys():
                         drivers_delivering.append(self.graph[z][0])
-                        q.dequeue()
-                if len(q.queue) == 0:
-                    print(f"The drivers who deliver to {city} are: {drivers_delivering}")
-                    return 
+                print()
+                print(f"The drivers who deliver to {city} are: {drivers_delivering}")
+                print()
+                drivers_delivering.clear()
+                city = input("Enter the name of the city here or 'stop' to exit: ").upper()
             else:
                 print("This city does not exist. Please enter a valid city or enter 'stop' to exit. ")
                 city = input("Enter the name of the city here: ").upper()
@@ -175,13 +185,16 @@ class Drivers:
             print()
             print(w)
             print()
-            ans = input("Enter 1 or 2 according to the above options:")
+            ans = input("Enter 1 or 2 according to the above options: ")
             if ans == "1":
+                print()
                 print("To add a driver, you have to pick the city from where he is starting.")
                 print()
                 city = input("Enter the starting city: ").upper()
                 if city not in c.graph.keys():
+                    print()
                     print("The city does not exist. Do you want to add this city?")
+                    print()
                     answer = input("Answer with yes or no: ").lower()
                     if answer == "yes":
                         c.add_city()
@@ -209,14 +222,20 @@ class Drivers:
         print()
         ans = input("Enter 1 or 2 according to the above options: ")
         while True:
+            ans = input("Enter 1 or 2 according to the above options: ")
             if ans == "1":
+                print()
                 driver = input("Enter the name of the driver to remove: ").upper()
+                print()
                 if driver in self.driver.keys():
                     a = self.driver[driver][0]
                     del(self.driver[driver])
                     c.graph[a].pop(0)
                 else:
+                    print()
                     print("This entry is not correct. Please try again or enter '2' if you want to go back to main menu")
+                    print()
+                continue
             elif ans == "2":
                 return
             else:
@@ -239,15 +258,15 @@ class Drivers:
             if entry == "1":
                 for key in self.driver.keys():
                     print(key, end = " - ")  #this one only prints the keys (the registered drivers)
-                    print()
-                    print()
+                print()
+                print()
             elif entry == "2":
                 print()
                 for key,value in self.driver.items():
                     print(f"{key}: {value}")    # this one prints all the keys with their values (the drivers and their information)
                 print()
             elif entry == "3":
-                driver = input("Enter the full name of the driver you want to search for")
+                driver = input("Enter the full name of the driver you want to search for: ").upper()
                 if driver in self.driver.keys():
                     print()
                     print(f"{driver}: {self.driver[driver]}")
