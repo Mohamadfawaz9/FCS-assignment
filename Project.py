@@ -65,7 +65,7 @@ class Cities:
             print(s)
             print()
             ans = input("Enter 1, 2 or 3 according to the above options: ")
-            if ans == "1":
+            if ans == "1":          #This option deletes a city from the whole graph
                 city = input("Enter the name of the city to remove: ").upper()
                 if city in self.graph.keys():
                     if self.graph[city][0] in d.driver.keys():
@@ -82,7 +82,7 @@ class Cities:
                                 value.remove(city)
                 else:
                     print("This entry is not correct. Please enter '1' and try again or enter '2' if you want to go back to main menu")
-            elif ans == "2":
+            elif ans == "2":               #This option sever the connection (edge) between two cities but keep both of the in the graph
                 city = input("Enter the name of the main city: ").upper()
                 while city != "STOP":
                     o_city = input("the name of the city you want to remove: ").upper()
@@ -187,7 +187,7 @@ class Cities:
 class Drivers:
     def __init__(self):
         self.driver = {}
-        self.size = 0
+        self.size = 0           #This attribute is only used to give the driver an ID
 
     def add_driver(self,c):
         w = '''Please enter:
